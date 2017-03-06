@@ -7,8 +7,11 @@ import org.fkit.domain.Book;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ray on 2017/3/5.
@@ -28,5 +31,13 @@ public class BookController {
 
     }
 
+    @RequestMapping(value = "/testRespond")
+    @ResponseBody
+    public Object getJson(){
+        List<Book> list = new ArrayList<>();
+        list.add(new Book(1,"Spring MVC","Ray"));
+        list.add(new Book(2,"Java EE","Tom"));
+        return list;
+    }
 
 }
