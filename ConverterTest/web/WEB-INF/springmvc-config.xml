@@ -24,13 +24,27 @@
         <!--</property>-->
     <!--</bean>-->
 
+    <!--<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+        <!--<property name="formatters">-->
+            <!--<bean class="org.fkit.formatter.DateFormatter">-->
+                <!--<constructor-arg index="0" value="yyyy-MM-dd"/>-->
+            <!--</bean>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--DateFormatter bean-->
+    <bean id="dateFormatter" class="org.fkit.formatter.DateFormatter" c:_0="yyyy-MM-dd"/>
+    <!--格式化-->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="formatters">
-            <bean class="org.fkit.formatter.DateFormatter">
-                <constructor-arg index="0" value="yyyy-MM-dd"/>
-            </bean>
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="org.fkit.formatter.MyFormatterRegistrar">
+                    <constructor-arg ref="dateFormatter"/>
+                </bean>
+            </set>
         </property>
     </bean>
+
 
     <!-- 视图解析器  -->
     <bean id="viewResolver"
