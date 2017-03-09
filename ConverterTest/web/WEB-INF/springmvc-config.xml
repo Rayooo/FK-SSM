@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
        http://www.springframework.org/schema/mvc
@@ -16,11 +16,19 @@
     <!--装配自定义的类型转换器-->
     <mvc:annotation-driven conversion-service="conversionService"/>
     <!--自定义的类型转换器-->
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters">
-            <list>
-                <bean class="org.fkit.converter.StringToDateConverter" p:datePattern="yyyy-MM-dd"/>
-            </list>
+    <!--<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">-->
+        <!--<property name="converters">-->
+            <!--<list>-->
+                <!--<bean class="org.fkit.converter.StringToDateConverter" p:datePattern="yyyy-MM-dd"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <bean class="org.fkit.formatter.DateFormatter">
+                <constructor-arg index="0" value="yyyy-MM-dd"/>
+            </bean>
         </property>
     </bean>
 
