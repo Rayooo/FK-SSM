@@ -7,4 +7,23 @@
     <insert id="save" parameterType="org.fkit.domain.User" useGeneratedKeys="true">
         INSERT INTO TB_USER(name,sex,age) VALUES (#{name}, #{sex}, #{age})
     </insert>
+
+    <select id="selectUser" parameterType="int" resultType="org.fkit.domain.User">
+        SELECT * FROM TB_USER WHERE id=#{id}
+    </select>
+
+    <update id="modifyUser" parameterType="org.fkit.domain.User">
+        UPDATE TB_USER
+        SET name = #{name}, sex = #{sex}, age = #{age}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="removeUser" parameterType="int">
+        DELETE FROM TB_USER WHERE id = #{id}
+    </delete>
+
+    <select id="selectUserList" resultType="map">
+        SELECT * FROM tb_user
+    </select>
+
 </mapper>
