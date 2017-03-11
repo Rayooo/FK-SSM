@@ -26,4 +26,50 @@
         SELECT * FROM tb_user
     </select>
 
+
+    <!--*******************************************************************-->
+
+    <!--映射学对象的resultMap-->
+    <resultMap id="studentResultMap" type="org.fkit.domain.Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+
+        <!--关联映射-->
+        <association property="clazz" column="clazz_id" javaType="org.fkit.domain.Clazz" select="selectClazzWithId"/>
+
+    </resultMap>
+
+    <select id="selectClazzWithId" resultType="org.fkit.domain.Clazz">
+        SELECT * FROM TB_CLAZZ WHERE id=#{id}
+    </select>
+
+    <select id="selectStudent" resultMap="studentResultMap">
+        SELECT * FROM TB_STUDENT
+    </select>
+
+    <!--*******************************************************************-->
+
+    <!--映射班级对象的resultMap-->
+    <resultMap id="clazzResultMap" type="org.fkit.domain.Clazz">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+
+        <!--班级的学生属性，因为一个班级有多个学生，所以该属性是一个集合-->
+        <collection property="students" javaType="ArrayList" column="id" ofType="org.fkit.domain.Student" select="selectStudentWithId"/>
+
+    </resultMap>
+
+    <select id="selectStudentWithId" resultType="org.fkit.domain.Student">
+        SELECT * FROM TB_STUDENT WHERE clazz_id=#{id}
+    </select>
+
+    <select id="selectClazz" resultMap="clazzResultMap">
+        SELECT * FROM TB_CLAZZ
+    </select>
+
+
+
+
 </mapper>
