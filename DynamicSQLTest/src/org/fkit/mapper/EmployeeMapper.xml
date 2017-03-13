@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fkit.mapper.EmployeeMapper">
+    <select id="selectEmployeeByIdLike" resultType="org.fkit.domain.Employee">
+        SELECT * FROM tb_employee WHERE state='ACTIVE'
+        <!--可选条件，如果传进来有id属性，则加上id查询条件-->
+        <if test="id != null">
+            AND id=#{id}
+        </if>
+
+        <if test="loginname != null and password != null">
+            AND tb_employee.loginname = #{loginname} AND tb_employee.password = #{password}
+        </if>
+
+    </select>
+</mapper>
