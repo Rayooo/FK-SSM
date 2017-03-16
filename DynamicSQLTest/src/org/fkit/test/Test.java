@@ -16,7 +16,9 @@ public class Test {
         SqlSession session = FKSqlSessionFactory.getSqlSession();
 
         Test test = new Test();
-        test.testSelectEmployeeByIdLike(session);
+//        test.testSelectEmployeeByIdLike(session);
+
+        test.testSelectEmployeeChoose();
 
     }
 
@@ -38,5 +40,19 @@ public class Test {
 
     }
 
+    public void testSelectEmployeeChoose(){
+
+        SqlSession session = FKSqlSessionFactory.getSqlSession();
+        EmployeeMapper em = session.getMapper(EmployeeMapper.class);
+
+        HashMap<String,Object> params = new HashMap<>();
+//        params.put("id",1);
+//        params.put("loginname","jack");
+//        params.put("password","123456");
+
+        List<Employee> list = em.selectEmployeeChoose(params);
+        list.forEach(employee -> System.out.println(employee.getName()));
+
+    }
 
 }

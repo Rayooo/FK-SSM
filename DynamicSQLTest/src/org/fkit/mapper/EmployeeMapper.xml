@@ -14,4 +14,22 @@
         </if>
 
     </select>
+
+    <select id="selectEmployeeChoose" parameterType="hashMap" resultType="org.fkit.domain.Employee">
+        SELECT * FROM tb_employee WHERE state = 'ACTIVE'
+        <!--如果传入了id，就根据id查询，没有传入id就根据loginname和password查询，否则就查询sex=男的数据-->
+        <choose>
+            <when test="id != null">
+                AND id = #{id}
+            </when>
+            <when test="loginname != null and password != null">
+                AND tb_employee.loginname = #{loginname} and tb_employee.password = #{password}
+            </when>
+            <otherwise>
+                AND tb_employee.sex = '男'
+            </otherwise>
+        </choose>
+    </select>
+
+
 </mapper>

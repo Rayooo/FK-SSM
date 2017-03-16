@@ -10,4 +10,7 @@ import java.util.List;
  */
 public interface EmployeeMapper {
     List<Employee> selectEmployeeByIdLike(HashMap<String,Object> params);
+
+    List<Employee> selectEmployeeChoose(HashMap<String,Object> params);
+
 }
