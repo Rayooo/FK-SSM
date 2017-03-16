@@ -13,4 +13,14 @@ public interface EmployeeMapper {
 
     List<Employee> selectEmployeeChoose(HashMap<String,Object> params);
 
+    List<Employee> selectEmployeeLike(HashMap<String,Object> params);
+
+    Employee selectEmployeeById(Integer id);
+
+    void updateEmployeeIfNecessary(Employee employee);
+
+    List<Employee> selectEmployeeIn(List<Integer> ids);
+
+    List<Employee> selectEmployeeLikeName(Employee employee);
+
 }

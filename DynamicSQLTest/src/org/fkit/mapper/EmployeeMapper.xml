@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fkit.mapper.EmployeeMapper">
+
+    <!--if演示-->
     <select id="selectEmployeeByIdLike" resultType="org.fkit.domain.Employee">
         SELECT * FROM tb_employee WHERE state='ACTIVE'
         <!--可选条件，如果传进来有id属性，则加上id查询条件-->
@@ -15,6 +17,7 @@
 
     </select>
 
+    <!--choose演示-->
     <select id="selectEmployeeChoose" parameterType="hashMap" resultType="org.fkit.domain.Employee">
         SELECT * FROM tb_employee WHERE state = 'ACTIVE'
         <!--如果传入了id，就根据id查询，没有传入id就根据loginname和password查询，否则就查询sex=男的数据-->
@@ -31,5 +34,55 @@
         </choose>
     </select>
 
+
+    <!-- where演示 自动过滤SQL语句中的 AND 和 OR -->
+    <select id="selectEmployeeLike" resultType="org.fkit.domain.Employee">
+        SELECT * FROM tb_employee
+        <where>
+            <if test="state != null">
+                state = #{state}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="loginname != null and password != null">
+                and loginname = #{loginname} and password = #{password}
+            </if>
+        </where>
+    </select>
+
+    <!--set演示，更新-->
+    <select id="selectEmployeeById" resultType="org.fkit.domain.Employee" parameterType="int">
+        SELECT * FROM tb_employee WHERE id=#{id}
+    </select>
+    <update id="updateEmployeeIfNecessary" parameterType="org.fkit.domain.Employee">
+        UPDATE tb_employee
+        <set>
+            <if test="loginname != null">loginname = #{loginname},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="sal != null">sal = #{sal},</if>
+            <if test="state != null">state = #{state}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!--foreach对一个集合进行遍历-->
+    <select id="selectEmployeeIn" resultType="org.fkit.domain.Employee">
+        SELECT * FROM tb_employee WHERE id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--bind使用-->
+    <select id="selectEmployeeLikeName" resultType="org.fkit.domain.Employee">
+        <bind name="pattern" value="'%' + _parameter.getName() + '%'"/>
+        SELECT * FROM tb_employee WHERE loginname LIKE #{pattern}
+    </select>
 
 </mapper>
