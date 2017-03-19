@@ -25,5 +25,6 @@
 
     </bean>
 
+    <mvc:resources mapping="/images/**" location="/images/"/>
 
 </beans>

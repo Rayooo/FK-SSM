@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.fkit.service.UserService" %><%--
   Created by IntelliJ IDEA.
   User: Ray
   Date: 2017/3/19
@@ -11,6 +11,5 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
   </body>
 </html>
